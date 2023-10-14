@@ -7,7 +7,7 @@ G = 6.67408E-8
 Rb = 8.314511E7
 Lsol = 3.828E33
 
-#Para epsilon eridani
+# #Para epsilon eridani
 Lestrela = 0.34*Lsol
 Lerr = 0.01*Lsol
 Restrela = 0.735*Rsol
@@ -16,13 +16,13 @@ Mestrela = 0.82*Msol
 Merr = 0.02*Msol    
 Zestrela= 0.74*Zsol
 
-#Para ThetaOrion
-Mestrela = 33 *Msol
-Merr = 5*Msol
-Restrela = 10.6*Rsol
-Rerr = 1.5*Rsol
-Lestrela = 204000*Lsol
-Lerr = 1.3*Lsol
+# #Para ThetaOrion
+# Mestrela = 33 *Msol
+# Merr = 5*Msol
+# Restrela = 10.6*Rsol
+# Rerr = 1.5*Rsol
+# Lestrela = 204000*Lsol
+# Lerr = 1.3*Lsol
 
 
 import numpy as np 
@@ -168,15 +168,17 @@ def erro(Nt,y,Mestrela, Merr, Restrela, Rerr, Lestrela, Lerr, Xestrela, Zestrela
     npoint= 3
     a0=np.zeros(Nt,float)
     a1=np.zeros(Nt,float)
+    contr = 0
     
     for i in range(0,Nt):
         try:
             print(i)
+            contr = i
             Mn = Mestrela + Merr*np.random.normal(0,1)
             Rn = Restrela + Rerr*np.random.normal(0,1)
             Ln = Lestrela + Lerr*np.random.normal(0,1)
             a0[i] = obter_n(y, Mn, Rn,Ln, 0.74, Zestrela)
-            with open("ThetaOrionr.txt", "a") as arquivo:
+            with open("EpsilonEridani.txt", "a") as arquivo:
                 # Escreva os valores no arquivo, um por linha
                 arquivo.write(str([a0[i], Mn,Rn,Ln]) + "\n")
             arquivo.close()
@@ -186,6 +188,8 @@ def erro(Nt,y,Mestrela, Merr, Restrela, Rerr, Lestrela, Lerr, Xestrela, Zestrela
         except RuntimeError:
             print("Deu erro")
             continue
+    with open("Controlo das Contagens Eri.txt", "a") as arquivo:
+        arquivo.write("Ultima foi:"+str(contr+1) +"\n")
 
 
 
